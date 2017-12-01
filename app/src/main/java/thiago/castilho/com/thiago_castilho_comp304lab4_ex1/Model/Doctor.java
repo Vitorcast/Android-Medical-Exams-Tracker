@@ -32,4 +32,8 @@ public class Doctor {
         this.email = email;
         this.password = password;
     }
+
+    public String toString()    {
+        return( firstName + " " + lastName);
+    }
 }

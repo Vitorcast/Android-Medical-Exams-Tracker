@@ -17,8 +17,8 @@ public abstract class PatientDao implements BaseDao<Patient> {
     @Query("SELECT * FROM patient where  id = :id")
     public abstract Patient getPatientById(Integer id);
 
-    @Query("SELECT * FROM patient where  firstName = :name")
-    public abstract Patient getPatientByName(String name);
+    @Query("SELECT * FROM patient where  firstName = :firstName and lastName = :lastName")
+    public abstract Patient getPatientByName(String firstName, String lastName);
 
 
 }

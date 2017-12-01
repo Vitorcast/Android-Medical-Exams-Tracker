@@ -23,4 +23,8 @@ public class Patient {
         this.doctorId = doctorId;
         this.room = room;
     }
+
+    public String toString()    {
+        return( firstName + " " + lastName);
+    }
 }

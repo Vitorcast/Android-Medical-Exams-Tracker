@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -23,11 +24,20 @@ import thiago.castilho.com.thiago_castilho_comp304lab4_ex1.Fragments.ReadTestFra
 import thiago.castilho.com.thiago_castilho_comp304lab4_ex1.Model.DataContext;
 import thiago.castilho.com.thiago_castilho_comp304lab4_ex1.Model.Doctor;
 import thiago.castilho.com.thiago_castilho_comp304lab4_ex1.Model.Nurse;
+import thiago.castilho.com.thiago_castilho_comp304lab4_ex1.Model.Test;
 import thiago.castilho.com.thiago_castilho_comp304lab4_ex1.Util.App;
 import thiago.castilho.com.thiago_castilho_comp304lab4_ex1.Util.DB;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    AddTestFragment addTestFragment;
+    ReadTestFragment readTestFragment;
+    PatientInfoFragment patientInfoFragment;
+
+    public Fragment currentFragment = null;
+
+    public Test test = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +64,7 @@ public class MainActivity extends AppCompatActivity
         }
 
         setUserData(navigationView);
-        displaySelectedScreen(R.id.nav_add_test);
+        displaySelectedScreen(R.id.nav_patient_info);
     }
 
     @Override
@@ -106,20 +116,27 @@ public class MainActivity extends AppCompatActivity
         switch (itemId) {
             case R.id.nav_add_test:
                 fragment = new AddTestFragment();
+                addTestFragment = (AddTestFragment)fragment;
                 break;
             case R.id.nav_read_test:
                 fragment = new ReadTestFragment();
+                readTestFragment = (ReadTestFragment) fragment;
                 break;
             case R.id.nav_patient_info:
                 fragment = new PatientInfoFragment();
+                patientInfoFragment = (PatientInfoFragment)fragment;
                 break;
         }
 
         //replacing the fragment
         if (fragment != null) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            if(currentFragment != null){
+                getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            }
             ft.replace(R.id.content_frame, fragment);
-            ft.commit();
+            currentFragment = fragment;
+            ft.commitAllowingStateLoss();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -153,6 +170,17 @@ public class MainActivity extends AppCompatActivity
                 tvUserName.setText(nurse.firstName + " " + nurse.lastName);
             }
             tvEmail.setText(nurse.email);
+        }
+    }
+
+    public void onClick(View view){
+        switch(view.getId()){
+            case R.id.addTest:
+                addTestFragment.onClick(view);
+                break;
+            case R.id.btnRegisterPatient:
+                patientInfoFragment.onClick(view);
+                break;
         }
     }
 }

@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 
 public class PreferenceClass {
     public static final String USER_ID = "USER_ID";
+
     private final SharedPreferences sharedpreferences;
 
     public PreferenceClass(Context context) {

@@ -136,8 +136,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         DB.database.patientDao().insertUser(patient1,patient2);
 
-        patient1 = DB.database.patientDao().getPatientByName(patient1.firstName);
-        patient2 = DB.database.patientDao().getPatientByName(patient2.firstName);
+        patient1 = DB.database.patientDao().getPatientByName(patient1.firstName, patient1.lastName);
+        patient2 = DB.database.patientDao().getPatientByName(patient2.firstName, patient2.lastName);
 
         Test test1 = new Test(125, 250, 30, nurse1.id, patient1.id);
         Test test2 = new Test(125, 250, 30, nurse2.id, patient2.id);
